@@ -5,6 +5,7 @@ import { getData, getSanitizedData, unifiedToNative } from '../../utils'
 import { uncompress } from '../../utils/data'
 import { EmojiPropTypes, EmojiDefaultProps } from '../../utils/shared-props'
 
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 const SHEET_COLUMNS = 52
 
 const _getData = (props) => {
@@ -158,8 +159,8 @@ const NimbleEmoji = (props) => {
       <span
         key={props.emoji.id || props.emoji}
         onClick={(e) => _handleClick(e, props)}
-        onMouseEnter={(e) => _handleOver(e, props)}
-        onMouseLeave={(e) => _handleLeave(e, props)}
+        onMouseEnter={e => !isIOS ? _handleOver(e, props) : {}}
+        onMouseLeave={e => !isIOS ? _handleLeave(e, props) : {}}
         title={title}
         className={className}
       >
